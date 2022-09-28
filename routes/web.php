@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Covid19Controller;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\StaffController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,23 +19,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/staff', [ StaffController::class, 'index' ]);
-Route::get("/staff/create", [StaffController::class, "create"]);
-Route::get('/staff/{id}', [StaffController::class, 'show']);
-Route::get("/staff/{id}/edit", [StaffController::class, "edit"]);
 
-Route::post("/staff", [StaffController::class, "store"]);
-Route::patch("/staff/{id}", [StaffController::class, "update"]);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-Route::delete('/staff/{id}', [StaffController::class, 'destroy']);
-Route::get('/covid19', [Covid19Controller::class, 'index']);
-Route::get("/covid19/create", [Covid19Controller::class, "create"]);
-Route::get('/covid19/{id}', [Covid19Controller::class, 'show']);
-Route::get("/covid19/{id}/edit", [Covid19Controller::class, "edit"]);
+require __DIR__.'/auth.php';
 
-Route::post("/covid19", [Covid19Controller::class, "store"]);
-Route::patch("/covid19/{id}", [Covid19Controller::class, "update"]);
-
-Route::delete('/covid19/{id}', [Covid19Controller::class, 'destroy']);
-//Route::resource('post', 'PostController');
-Route::resource('post', PostController::class);
+//Route::resource('profile', 'ProfileController');
+//Route::resource('user', 'UserController');
+//Route::resource('vehicle', 'VehicleController');
+Route::resource('profile', ProfileController::class);
+Route::resource('user', UserController::class);
+Route::resource('vehicle', VehicleController::class);
